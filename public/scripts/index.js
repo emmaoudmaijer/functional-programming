@@ -34,41 +34,53 @@ function Ruilmiddelperland() {
 		  console.log(results);
 })
 }
+// d3.json("/data/users.json", function(error, data) {
+    
+//     d3.select("body")
+//         .selectAll("p")
+//         .data(data)
+//         .enter()
+//         .append("p")
+//         .text(function(d) {
+//             return d.name + ", " + d.location;
+//         });
+
+// });
 
 const sample = [
 	{
-	  continent: 'Munten',
-	  value: 1000,
+	  continent: 'Ijzergeld',
+	  value: 234,
 	  color: '#000000'
 	},
 	{
-	  continent: 'Geld naar functie',
-	  value: 500,
+	  continent: 'Kralengeld',
+	  value: 50,
 	  color: '#00a2ee'
 	},
 	{
-	  continent: 'Gebruikspenningen met betaalwaarde',
-	  value: 300,
+	  continent: 'Stofgeld',
+	  value: 131,
 	  color: '#fbcb39'
 	},
 	{
-	  continent: 'Postzegels',
-	  value: 600,
+	  continent: 'Verengeld',
+	  value: 3,
 	  color: '#007bc8'
 	},
 	{
-	  continent: 'Goederengeld',
-	  value: 800,
+	  continent: 'Stenen geld',
+	  value: 1,
 	  color: '#65cedb'
 	},
 	{
-		continent: 'Betaalpenningen',
-		value: 141,
+		continent: 'Geldsnoeren',
+		value: 126,
 		color: '#65cedb'
 	  },
 	  {
-		continent: 'Papiergeld',
-		value: 102,
+		continent: 'Schelpengeld',
+		value: 165,
 		color: '#65cedb'
 	  }
   ];
@@ -90,7 +102,7 @@ const sample = [
   
   const yScale = d3.scaleLinear()
 	.range([height, 0])
-	.domain([0, 1300]);
+	.domain([0, 240]);
 
   const makeYLines = () => d3.axisLeft()
 	.scale(yScale)
@@ -169,7 +181,7 @@ const sample = [
 	.append('text')
 	.attr('class', 'value')
 	.attr('x', (a) => xScale(a.continent) + xScale.bandwidth() / 2)
-	.attr('y', (a) => yScale(a.value) + 30)
+	.attr('y', (a) => yScale(a.value) + 40)
 	.attr('text-anchor', 'middle')
 	.text((a) => `${a.value}`)
   
@@ -194,7 +206,7 @@ const sample = [
 	.attr('x', width / 2 + margin)
 	.attr('y', 40)
 	.attr('text-anchor', 'middle')
-	.text('Hoeveel ruilmiddelen bevat de collectie uit welke continenten?')
+	.text('Uit welke ruilmiddelen bestaat de collectie van het NMWC?')
 
   svg.append('text')
 	.attr('class', 'source')

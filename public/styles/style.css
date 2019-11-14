@@ -10,7 +10,7 @@
 	width: 1000px;
 	height: 600px;
 	margin: auto;
-	background-color: rgb(30, 54, 87);
+	background-color: rgb(10, 36, 71);
   }
   
   svg {
@@ -19,7 +19,7 @@
   }
   
   .bar {
-	fill: #80cbc4;
+	fill: #62b9b1;
   }
   
   text {
@@ -36,7 +36,7 @@
   }
   
   line#limit {
-	stroke: #FED966;
+	stroke: White;
 	stroke-width: 3;
 	stroke-dasharray: 3 6;
   }
@@ -52,7 +52,7 @@
   
   text.divergence {
 	font-size: 14px;
-	fill: #2F4A6D;
+	fill: rgb(24, 44, 70);
   }
   
   text.value {
