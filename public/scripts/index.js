@@ -13,7 +13,7 @@ WHERE {
   <https://hdl.handle.net/20.500.11840/termmaster12596> skos:narrower ?cat .
   ?cat skos:prefLabel ?catLabel .
 
-  # geef de subcategorieen van ruilmiddelen
+  # geef de subcategoren van ruilmiddelen
   ?cat skos:narrower* ?type .
 
   # geef objecten bij de onderliggende types
@@ -23,16 +23,18 @@ WHERE {
 `
 function Ruilmiddelperland() {
 	fetch(url +"?query="+ encodeURIComponent(query) + "&format=json")
-	  .then(data => data.json())
-		.then(json => json.results.bindings)
-	  .then(results => {
-	  //TODO: clean up results in separate function
-		 results.forEach(result => {
-		 results.herkomstSuper = result.herkomstSuper.value
-		 results.herkomstSuper = result.herkomstSuper.value
-		})    
-		  console.log(results);
-})
+		.then(data => data.json())
+		.then(json => {
+			const newResults = json.results.bindings
+				.map(result => {
+					return {
+						category: result.catLabel.value,
+						value: Number(result.choCount.value)
+					}
+				})
+
+			bouwViz(newResults)
+		})
 }
 // d3.json("/data/users.json", function(error, data) {
     
@@ -46,170 +48,134 @@ function Ruilmiddelperland() {
 //         });
 
 // });
+Ruilmiddelperland()
 
-const sample = [
-	{
-	  categorie: 'Ijzergeld',
-	  value: 234,
-	  color: '#000000'
-	},
-	{
-	  categorie: 'Kralengeld',
-	  value: 50,
-	  color: '#00a2ee'
-	},
-	{
-	  categorie: 'Stofgeld',
-	  value: 131,
-	  color: '#fbcb39'
-	},
-	{
-	  categorie: 'Verengeld',
-	  value: 3,
-	  color: '#007bc8'
-	},
-	{
-	  categorie: 'Stenen geld',
-	  value: 1,
-	  color: '#65cedb'
-	},
-	{
-	  categorie: 'Geldsnoeren',
-	  value: 126,
-	  color: '#65cedb'
-	  },
-	  {
-	  categorie: 'Schelpengeld',
-	  value: 165,
-	  color: '#65cedb'
-	  }
-  ];
+function bouwViz(results) {
+	const svg = d3.select('svg');
 
-  const svg = d3.select('svg');
-  const svgContainer = d3.select('#container');
-  
-  const margin = 80;
-  const width = 1000 - 2 * margin;
-  const height = 600 - 2 * margin;
+	const margin = 80;
+	const width = 1000 - 2 * margin;
+	const height = 600 - 2 * margin;
 
-  const chart = svg.append('g')
-	.attr('transform', `translate(${margin}, ${margin})`);
+	const chart = svg.append('g')
+		.attr('transform', `translate(${margin}, ${margin})`);
 
-  const xScale = d3.scaleBand()
-	.range([0, width])
-	.domain(sample.map((s) => s.categorie))
-	.padding(0.4)
-  
-  const yScale = d3.scaleLinear()
-	.range([height, 0])
-	.domain([0, 240]);
+	const xScale = d3.scaleBand()
+		.range([0, width])
+		.domain(results.map((s) => s.category))
+		.padding(0.4)
 
-  const makeYLines = () => d3.axisLeft()
-	.scale(yScale)
+	const yScale = d3.scaleLinear()
+		.range([height, 0])
+		.domain([0, 240]);
 
-  chart.append('g')
-	.attr('transform', `translate(0, ${height})`)
-	.call(d3.axisBottom(xScale));
+	const makeYLines = () => d3.axisLeft()
+		.scale(yScale)
 
-  chart.append('g')
-	.call(d3.axisLeft(yScale));
+	chart.append('g')
+		.attr('transform', `translate(0, ${height})`)
+		.call(d3.axisBottom(xScale));
 
-  chart.append('g')
-	.attr('class', 'grid')
-	.call(makeYLines()
-	  .tickSize(-width, 0, 0)
-	  .tickFormat('')
-	)
+	chart.append('g')
+		.call(d3.axisLeft(yScale));
 
-  const barGroups = chart.selectAll()
-	.data(sample)
-	.enter()
-	.append('g')
+	chart.append('g')
+		.attr('class', 'grid')
+		.call(makeYLines()
+		.tickSize(-width, 0, 0)
+		.tickFormat('')
+		)
 
-  barGroups
-	.append('rect')
-	.attr('class', 'bar')
-	.attr('x', (g) => xScale(g.categorie))
-	.attr('y', (g) => yScale(g.value))
-	.attr('height', (g) => height - yScale(g.value))
-	.attr('width', xScale.bandwidth())
-	.on('mouseenter', function (actual, i) {
-	  d3.selectAll('.value')
-		.attr('opacity', 0)
+	const barGroups = chart.selectAll()
+		.data(results)
+		.enter()
+		.append('g')
 
-	  d3.select(this)
-		.transition()
-		.duration(300)
-		.attr('opacity', 0.6)
-		.attr('x', (a) => xScale(a.categorie) - 5)
-		.attr('width', xScale.bandwidth() + 10)
-
-	  const y = yScale(actual.value)
-
-// LIJN BOVEN DE BAR CHARTS VOOR EEN DUIDELIJK OVERZICHT
-	  line = chart.append('line')
-		.attr('id', 'limit')
-		.attr('x1', 0)
-		.attr('y1', y)
-		.attr('x2', width)
-		.attr('y2', y)
-
-	  barGroups.append('text')
-		.attr('class', 'divergence')
-		.attr('x', (a) => xScale(a.categorie) + xScale.bandwidth() / 2)
-		.attr('y', (a) => yScale(a.value) + 30)
-		.attr('fill', 'white')
-		.attr('text-anchor', 'middle')
-
-	})
-	.on('mouseleave', function () {
-	  d3.selectAll('.value')
-		.attr('opacity', 1)
-
-	  d3.select(this)
-		.transition()
-		.duration(300)
-		.attr('opacity', 1)
-		.attr('x', (a) => xScale(a.categorie))
+	barGroups
+		.append('rect')
+		.attr('class', 'bar')
+		.attr('x', (g) => xScale(g.category))
+		.attr('y', (g) => yScale(g.value))
+		.attr('height', (g) => height - yScale(g.value))
 		.attr('width', xScale.bandwidth())
+		.on('mouseenter', function (actual, i) {
+		d3.selectAll('.value')
+			.attr('opacity', 0)
 
-	  chart.selectAll('#limit').remove()
-	  chart.selectAll('.divergence').remove()
-	})
+		d3.select(this)
+			.transition()
+			.duration(300)
+			.attr('opacity', 0.6)
+			.attr('x', (a) => xScale(a.category) - 5)
+			.attr('width', xScale.bandwidth() + 10)
 
-  barGroups 
-	.append('text')
-	.attr('class', 'value')
-	.attr('x', (a) => xScale(a.categorie) + xScale.bandwidth() / 2)
-	.attr('y', (a) => yScale(a.value) + 40)
-	.attr('text-anchor', 'middle')
-	.text((a) => `${a.value}`)
-  
-  svg
-	.append('text')
-	.attr('class', 'label')
-	.attr('x', -(height / 2) - margin)
-	.attr('y', margin / 2.4)
-	.attr('transform', 'rotate(-90)')
-	.attr('text-anchor', 'middle')
-	.text('Aantal ruilmiddelen')
+		const y = yScale(actual.value)
 
-  svg.append('text')
-	.attr('class', 'label')
-	.attr('x', width / 2 + margin)
-	.attr('y', height + margin * 1.7)
-	.attr('text-anchor', 'middle')
-	.text('continent')
+	// LIJN BOVEN DE BAR CHARTS VOOR EEN DUIDELIJK OVERZICHT
+		line = chart.append('line')
+			.attr('id', 'limit')
+			.attr('x1', 0)
+			.attr('y1', y)
+			.attr('x2', width)
+			.attr('y2', y)
 
-  svg.append('text')
-	.attr('class', 'title')
-	.attr('x', width / 2 + margin)
-	.attr('y', 40)
-	.attr('text-anchor', 'middle')
-	.text('Uit welke ruilmiddelen bestaat de collectie van het NMWC?')
+		barGroups.append('text')
+			.attr('class', 'divergence')
+			.attr('x', (a) => xScale(a.category) + xScale.bandwidth() / 2)
+			.attr('y', (a) => yScale(a.value) + 30)
+			.attr('fill', 'white')
+			.attr('text-anchor', 'middle')
 
-  svg.append('text')
-	.attr('class', 'source')
-	.attr('x', width - margin / 2)
-	.attr('y', height + margin * 1.7)
-	.attr('text-anchor', 'start')
+		})
+		.on('mouseleave', function () {
+		d3.selectAll('.value')
+			.attr('opacity', 1)
+
+		d3.select(this)
+			.transition()
+			.duration(300)
+			.attr('opacity', 1)
+			.attr('x', (a) => xScale(a.category))
+			.attr('width', xScale.bandwidth())
+
+		chart.selectAll('#limit').remove()
+		chart.selectAll('.divergence').remove()
+		})
+
+	barGroups 
+		.append('text')
+		.attr('class', 'value')
+		.attr('x', (a) => xScale(a.category) + xScale.bandwidth() / 2)
+		.attr('y', (a) => yScale(a.value) + 40)
+		.attr('text-anchor', 'middle')
+		.text((a) => `${a.value}`)
+
+	svg
+		.append('text')
+		.attr('class', 'label')
+		.attr('x', -(height / 2) - margin)
+		.attr('y', margin / 2.4)
+		.attr('transform', 'rotate(-90)')
+		.attr('text-anchor', 'middle')
+		.text('Aantal ruilmiddelen')
+
+	svg.append('text')
+		.attr('class', 'label')
+		.attr('x', width / 2 + margin)
+		.attr('y', height + margin * 1.7)
+		.attr('text-anchor', 'middle')
+		.text('continent')
+
+	svg.append('text')
+		.attr('class', 'title')
+		.attr('x', width / 2 + margin)
+		.attr('y', 40)
+		.attr('text-anchor', 'middle')
+		.text('Uit welke ruilmiddelen bestaat de collectie van het NMWC?')
+
+	svg.append('text')
+		.attr('class', 'source')
+		.attr('x', width - margin / 2)
+		.attr('y', height + margin * 1.7)
+		.attr('text-anchor', 'start')
+}
