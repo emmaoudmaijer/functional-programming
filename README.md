@@ -2,7 +2,10 @@
 ![foto](public/images/datavisualisatiekopie.png)
 Tijdens functional programming heb ik een datavisualisatie gemaakt voor het Nationaal Museum van Wereldculturen die collectiebreed en nuttig is voor het museum. Deze visualisatie gaat over de ruilmiddelen 
 
-Om meer te weten over mijn concept en het proces zie mijn [wiki](https://github.com/emmaoudmaijer/Frontend-applications/wiki/Het-concept-en-het-proces)
+### Het concept:
+De datavisualisatie laat zien hoeveel ruilmiddelen er zijn binnen de collectie van het NMWC binnen de catagorie Geld. Onder geld zitten weer verschillende soorten geld en met deze visualisatie kun je zien wat voor soort geld er is en hoeveel objecten er zijn binnen de verschillende categorieën.
+
+Om meer te weten over mijn proces zie mijn [wiki](https://github.com/emmaoudmaijer/Frontend-applications/wiki/Het-concept-en-het-proces)
 
 ## Query
 ```
@@ -34,10 +37,10 @@ Hier vind je de link naar het inladen en het manipuleren van de data, dit kun je
 
 ## Install
 
-```
+```js
 git clone https://github.com/emmaoudmaijer/functional-programming.git
 ```
-```
+```js
 cd functional-programming
 ```
 ```js
