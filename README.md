@@ -13,7 +13,10 @@ De datavisualisatie laat zien hoeveel ruilmiddelen er zijn binnen de collectie v
 
 Om meer te weten over mijn proces zie mijn [wiki](https://github.com/emmaoudmaijer/Frontend-applications/wiki/Het-concept-en-het-proces)
 
-## Query
+## Data & Query
+
+De collectie van het NMWC bestaat uit meer dan 700000 objecten, dit is natuurlijk heel veel, maar ik wilde een kleiner deel van de collectie gaan pakken om daat iets interessants mee te laten zien. Daarom besloot ik om me te gaan focussen op ruilmiddelen. De data die ik heb gebruikt komt van het [NMWC](https://collectie.wereldculturen.nl/#/query/80b924c9-65af-47cd-ad25-d7be31beb0ef). De query die ik heb gebruikt om de data over de ruilmiddelen op te halen vind je hier onder. Ik heb de subcategorie 'geld' gepakt van de ruilmiddelen en daaronder goederengeld. Nu kun je dus in de visualisatie zien waar dat allemaal uit bestaat. Dit heb ik gedaan omdat je als bezoeker dan een beter beeld krijgt van wat voor soort ruilmiddelen er nou eigenlijk bestaan en in welke categorie deze horen.
+
 ```
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX dc: <http://purl.org/dc/elements/1.1/>
@@ -39,7 +42,8 @@ WHERE {
 
 ## Data manipulatie
 Hier vind je de link naar het inladen en het manipuleren van de data, dit kun je ook zien in de wiki
-[Data manipulatie](https://github.com/emmaoudmaijer/functional-programming/blob/master/datamanipulation.js)
+[Data manipulatie.js bestand](https://github.com/emmaoudmaijer/functional-programming/blob/master/datamanipulation.js)
+[Wiki data manipulatie uitleg](https://github.com/emmaoudmaijer/functional-programming/wiki/data-manipulatie)
 
 ## Install
 
@@ -53,7 +57,7 @@ cd functional-programming
 npm install
 ```
 ## Special thanks
-Hulp gehad met de data invoegen uit sparql door Kris Kuijper
+Hulp gehad met de data invoegen uit sparql door Kris Kuiper
 ## Licence
 
 ISC - Emma Oudmaijer
