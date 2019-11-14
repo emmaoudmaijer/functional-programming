@@ -1,5 +1,5 @@
 # functional-programming
-![foto](images/datavisualisatiekopie.png)
+![foto](/images/datavisualisatiekopie.png)
 Tijdens functional programming heb ik een datavisualisatie gemaakt voor het Nationaal Museum van Wereldculturen die collectiebreed en nuttig is voor het museum. Deze visualisatie gaat over de ruilmiddelen 
 
 Om meer te weten over mijn concept en het proces zie mijn [wiki](https://github.com/emmaoudmaijer/Frontend-applications/wiki/Het-concept-en-het-proces)
