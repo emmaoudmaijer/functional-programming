@@ -153,7 +153,7 @@ function bouwViz(results) {
 		.attr('x', width / 2 + margin)
 		.attr('y', height + margin * 1.7)
 		.attr('text-anchor', 'middle')
-		.text('continent')
+		.text('categorie')
 
 	svg.append('text')
 		.attr('class', 'title')
@@ -162,9 +162,4 @@ function bouwViz(results) {
 		.attr('text-anchor', 'middle')
 		.text('Uit welke ruilmiddelen bestaat de collectie van het NMWC?')
 
-	// svg.append('text')
-	// 	.attr('class', 'source')
-	// 	.attr('x', width - margin / 2)
-	// 	.attr('y', height + margin * 1.7)
-	// 	.attr('text-anchor', 'start')
 }
