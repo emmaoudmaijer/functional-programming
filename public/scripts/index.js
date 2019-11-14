@@ -36,18 +36,7 @@ function Ruilmiddelperland() {
 			bouwViz(newResults)
 		})
 }
-// d3.json("/data/users.json", function(error, data) {
-    
-//     d3.select("body")
-//         .selectAll("p")
-//         .data(data)
-//         .enter()
-//         .append("p")
-//         .text(function(d) {
-//             return d.name + ", " + d.location;
-//         });
 
-// });
 Ruilmiddelperland()
 
 function bouwViz(results) {
@@ -86,12 +75,12 @@ function bouwViz(results) {
 		.tickFormat('')
 		)
 
-	const barGroups = chart.selectAll()
+	const categroryBar = chart.selectAll()
 		.data(results)
 		.enter()
 		.append('g')
 
-	barGroups
+	categroryBar
 		.append('rect')
 		.attr('class', 'bar')
 		.attr('x', (g) => xScale(g.category))
@@ -119,7 +108,7 @@ function bouwViz(results) {
 			.attr('x2', width)
 			.attr('y2', y)
 
-		barGroups.append('text')
+		categroryBar.append('text')
 			.attr('class', 'divergence')
 			.attr('x', (a) => xScale(a.category) + xScale.bandwidth() / 2)
 			.attr('y', (a) => yScale(a.value) + 30)
@@ -142,7 +131,7 @@ function bouwViz(results) {
 		chart.selectAll('.divergence').remove()
 		})
 
-	barGroups 
+	categroryBar
 		.append('text')
 		.attr('class', 'value')
 		.attr('x', (a) => xScale(a.category) + xScale.bandwidth() / 2)
@@ -173,9 +162,9 @@ function bouwViz(results) {
 		.attr('text-anchor', 'middle')
 		.text('Uit welke ruilmiddelen bestaat de collectie van het NMWC?')
 
-	svg.append('text')
-		.attr('class', 'source')
-		.attr('x', width - margin / 2)
-		.attr('y', height + margin * 1.7)
-		.attr('text-anchor', 'start')
+	// svg.append('text')
+	// 	.attr('class', 'source')
+	// 	.attr('x', width - margin / 2)
+	// 	.attr('y', height + margin * 1.7)
+	// 	.attr('text-anchor', 'start')
 }
