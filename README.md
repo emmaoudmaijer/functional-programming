@@ -6,7 +6,7 @@ Tijdens functional programming heb ik een datavisualisatie gemaakt voor het Nati
 ![foto](public/images/datavisualisatiehoverkopie.png)
 
 ### Het concept:
-De datavisualisatie laat zien hoeveel ruilmiddelen er zijn binnen de collectie van het NMWC binnen de catagorie Geld. Onder geld zitten weer verschillende soorten geld en met deze visualisatie kun je zien wat voor soort geld er is en hoeveel objecten er zijn binnen de verschillende categorieën.
+De datavisualisatie laat zien hoeveel ruilmiddelen er zijn binnen de collectie van het NMWC binnen de catagorie Geld. Onder geld zitten weer verschillende soorten ruilmiddelen en met deze visualisatie kun je zien wat voor soort geld er is en hoeveel objecten er zijn binnen de verschillende categorieën.
 
 - Je kunt met de muis over een categorie gaan en dan zie je een duidelijke lijn van hoeveel objecten er onder die categorie vallen.
 - Uiteindelijk is de bedoeling dat je op elke categorie door kan klikken om zo bij de subcategorieën te komen en weer een nieuwe bar chart krijgt met meer inhoud.
