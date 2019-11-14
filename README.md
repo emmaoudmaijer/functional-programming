@@ -37,13 +37,13 @@ Hier vind je de link naar het inladen en het manipuleren van de data, dit kun je
 
 ## Install
 
-```js
+```
 git clone https://github.com/emmaoudmaijer/functional-programming.git
 ```
-```js
+```
 cd functional-programming
 ```
-```js
+```
 npm install
 ```
 

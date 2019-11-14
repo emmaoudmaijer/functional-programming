@@ -49,39 +49,39 @@ function Ruilmiddelperland() {
 
 const sample = [
 	{
-	  continent: 'Ijzergeld',
+	  categorie: 'Ijzergeld',
 	  value: 234,
 	  color: '#000000'
 	},
 	{
-	  continent: 'Kralengeld',
+	  categorie: 'Kralengeld',
 	  value: 50,
 	  color: '#00a2ee'
 	},
 	{
-	  continent: 'Stofgeld',
+	  categorie: 'Stofgeld',
 	  value: 131,
 	  color: '#fbcb39'
 	},
 	{
-	  continent: 'Verengeld',
+	  categorie: 'Verengeld',
 	  value: 3,
 	  color: '#007bc8'
 	},
 	{
-	  continent: 'Stenen geld',
+	  categorie: 'Stenen geld',
 	  value: 1,
 	  color: '#65cedb'
 	},
 	{
-		continent: 'Geldsnoeren',
-		value: 126,
-		color: '#65cedb'
+	  categorie: 'Geldsnoeren',
+	  value: 126,
+	  color: '#65cedb'
 	  },
 	  {
-		continent: 'Schelpengeld',
-		value: 165,
-		color: '#65cedb'
+	  categorie: 'Schelpengeld',
+	  value: 165,
+	  color: '#65cedb'
 	  }
   ];
 
@@ -97,7 +97,7 @@ const sample = [
 
   const xScale = d3.scaleBand()
 	.range([0, width])
-	.domain(sample.map((s) => s.continent))
+	.domain(sample.map((s) => s.categorie))
 	.padding(0.4)
   
   const yScale = d3.scaleLinear()
@@ -129,7 +129,7 @@ const sample = [
   barGroups
 	.append('rect')
 	.attr('class', 'bar')
-	.attr('x', (g) => xScale(g.continent))
+	.attr('x', (g) => xScale(g.categorie))
 	.attr('y', (g) => yScale(g.value))
 	.attr('height', (g) => height - yScale(g.value))
 	.attr('width', xScale.bandwidth())
@@ -141,7 +141,7 @@ const sample = [
 		.transition()
 		.duration(300)
 		.attr('opacity', 0.6)
-		.attr('x', (a) => xScale(a.continent) - 5)
+		.attr('x', (a) => xScale(a.categorie) - 5)
 		.attr('width', xScale.bandwidth() + 10)
 
 	  const y = yScale(actual.value)
@@ -156,7 +156,7 @@ const sample = [
 
 	  barGroups.append('text')
 		.attr('class', 'divergence')
-		.attr('x', (a) => xScale(a.continent) + xScale.bandwidth() / 2)
+		.attr('x', (a) => xScale(a.categorie) + xScale.bandwidth() / 2)
 		.attr('y', (a) => yScale(a.value) + 30)
 		.attr('fill', 'white')
 		.attr('text-anchor', 'middle')
@@ -170,7 +170,7 @@ const sample = [
 		.transition()
 		.duration(300)
 		.attr('opacity', 1)
-		.attr('x', (a) => xScale(a.continent))
+		.attr('x', (a) => xScale(a.categorie))
 		.attr('width', xScale.bandwidth())
 
 	  chart.selectAll('#limit').remove()
@@ -180,7 +180,7 @@ const sample = [
   barGroups 
 	.append('text')
 	.attr('class', 'value')
-	.attr('x', (a) => xScale(a.continent) + xScale.bandwidth() / 2)
+	.attr('x', (a) => xScale(a.categorie) + xScale.bandwidth() / 2)
 	.attr('y', (a) => yScale(a.value) + 40)
 	.attr('text-anchor', 'middle')
 	.text((a) => `${a.value}`)
