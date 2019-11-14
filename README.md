@@ -1,8 +1,9 @@
 # functional-programming
-![foto](public/images/datavisualisatiekopie.png)
-![foto](public/images/datavisualisatiehoverkopie.png)
 
 Tijdens functional programming heb ik een datavisualisatie gemaakt voor het Nationaal Museum van Wereldculturen die collectiebreed en nuttig is voor het museum. Deze visualisatie gaat over de ruilmiddelen 
+
+![foto](public/images/datavisualisatiekopie.png)
+![foto](public/images/datavisualisatiehoverkopie.png)
 
 ### Het concept:
 De datavisualisatie laat zien hoeveel ruilmiddelen er zijn binnen de collectie van het NMWC binnen de catagorie Geld. Onder geld zitten weer verschillende soorten geld en met deze visualisatie kun je zien wat voor soort geld er is en hoeveel objecten er zijn binnen de verschillende categorieën.
