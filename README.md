@@ -52,7 +52,8 @@ cd functional-programming
 ```
 npm install
 ```
-
+## Special thanks
+Hulp gehad met de data invoegen uit sparql door Kris Kuijper
 ## Licence
 
 ISC - Emma Oudmaijer
