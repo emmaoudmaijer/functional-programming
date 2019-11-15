@@ -134,7 +134,6 @@ function bouwViz(results) {
 				.attr('width', xScale.bandwidth())
 
 			chart.selectAll('#limit').remove()
-			//chart.selectAll('.divergence').remove()
 		})
 
 	categoryBar
