@@ -165,5 +165,4 @@ function bouwViz(results) {
 		.attr('y', 40)
 		.attr('text-anchor', 'middle')
 		.text('Uit welke ruilmiddelen bestaat de collectie van het NMWC?')
-
 }
