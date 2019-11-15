@@ -164,13 +164,14 @@ geen idee`
 var LijstAntwoorden = kolomString.split("\n");
 
 var LijstAntwoordenSchoon = new Array(); 
-var opgeschoondAntwoord ='';
+//var opgeschoondAntwoord ='';
 
+//loop die door de alle ruwe antwoorden heen loopt en ze opschoont met behulp van de filtertypes.
 LijstAntwoorden.map(antwoord => {
-  LijstAntwoordenSchoon.push(filterTypos(antwoord));
+  LijstAntwoordenSchoon.push(cleandata(antwoord));
 });
 
-function filterTypos(antwoord) {
+function cleanDatat(antwoord) {
   return antwoord
     .replace('devoloper', 'developer')
     .replace('weet ik nog niet', 'geen idee')

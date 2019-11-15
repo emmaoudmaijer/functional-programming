@@ -22,7 +22,7 @@ WHERE {
 } GROUP BY ?cat ?catLabel
 `
 function Ruilmiddelperland() {
-	fetch(url +"?query="+ encodeURIComponent(query) + "&format=json")
+	fetch(url +"?query="+ encodeURIComponent(query) + "&format=json")//omzetten naar json en geschikt maken voor de het ophalen uit browser
 		.then(data => data.json())
 		.then(json => {
 			const newResults = json.results.bindings
@@ -41,7 +41,7 @@ Ruilmiddelperland()
 
 function bouwViz(results) {
 	const svg = d3.select('svg');
-
+//hoe breed en hoe hoog wordt de visualisatie?
 	const margin = 80;
 	const width = 1000 - 2 * margin;
 	const height = 600 - 2 * margin;
@@ -49,11 +49,16 @@ function bouwViz(results) {
 	const chart = svg.append('g')
 		.attr('transform', `translate(${margin}, ${margin})`);
 
+		//x-as schaal
 	const xScale = d3.scaleBand()
 		.range([0, width])
 		.domain(results.map((s) => s.category))
 		.padding(0.4)
 
+	//console.log(results);
+	//console.log(results.map((s) => s.category));
+
+	//y-as schaal
 	const yScale = d3.scaleLinear()
 		.range([height, 0])
 		.domain([0, 240]);
@@ -61,79 +66,79 @@ function bouwViz(results) {
 	const makeYLines = () => d3.axisLeft()
 		.scale(yScale)
 
+	// Nieuwe groep, horizontale lijn x-as tekenen
 	chart.append('g')
 		.attr('transform', `translate(0, ${height})`)
 		.call(d3.axisBottom(xScale));
 
+		// Nieuwe groep, verticale lijn y-as tekenen
 	chart.append('g')
 		.call(d3.axisLeft(yScale));
 
+		//grid maken op achtergrond bar chart
 	chart.append('g')
 		.attr('class', 'grid')
 		.call(makeYLines()
 		.tickSize(-width, 0, 0)
 		.tickFormat('')
 		)
-
-	const categroryBar = chart.selectAll()
+// data aanroepen, versturen en groeperen
+	const categoryBar = chart.selectAll()
 		.data(results)
 		.enter()
 		.append('g')
 
-	categroryBar
+	categoryBar
 		.append('rect')
 		.attr('class', 'bar')
 		.attr('x', (g) => xScale(g.category))
 		.attr('y', (g) => yScale(g.value))
 		.attr('height', (g) => height - yScale(g.value))
 		.attr('width', xScale.bandwidth())
+		//hover loslaten , geen opacity
+		
 		.on('mouseenter', function (actual, i) {
-		d3.selectAll('.value')
-			.attr('opacity', 0)
+			d3.selectAll('.value')
+				.attr('opacity', 0) //weghalen van de bar
 
-		d3.select(this)
-			.transition()
-			.duration(300)
-			.attr('opacity', 0.6)
-			.attr('x', (a) => xScale(a.category) - 5)
-			.attr('width', xScale.bandwidth() + 10)
+			d3.select(this)
+				.transition()
+				.duration(300)
+				.attr('opacity', 0.6) //terugzetten van de bar transparant
+				.attr('x', (a) => xScale(a.category) - 5)
+				.attr('width', xScale.bandwidth() + 10)
 
-		const y = yScale(actual.value)
+			const y = yScale(actual.value)
 
-	// LIJN BOVEN DE BAR CHARTS VOOR EEN DUIDELIJK OVERZICHT
-		line = chart.append('line')
-			.attr('id', 'limit')
-			.attr('x1', 0)
-			.attr('y1', y)
-			.attr('x2', width)
-			.attr('y2', y)
-
-		categroryBar.append('text')
-			.attr('class', 'divergence')
-			.attr('x', (a) => xScale(a.category) + xScale.bandwidth() / 2)
-			.attr('y', (a) => yScale(a.value) + 30)
-			.attr('fill', 'white')
-			.attr('text-anchor', 'middle')
+		// LIJN BOVEN DE BAR CHARTS VOOR EEN DUIDELIJK OVERZICHT
+			line = chart.append('line')
+				.attr('id', 'limit')
+				.attr('x1', 0)
+				.attr('y1', y)
+				.attr('x2', width)
+				.attr('y2', y)
 
 		})
+
+		//hover loslaten , geen opacity
 		.on('mouseleave', function () {
-		d3.selectAll('.value')
+		
+			d3.selectAll('.value')
 			.attr('opacity', 1)
 
-		d3.select(this)
-			.transition()
-			.duration(300)
-			.attr('opacity', 1)
-			.attr('x', (a) => xScale(a.category))
-			.attr('width', xScale.bandwidth())
+			d3.select(this)
+				.transition()
+				.duration(300)
+				.attr('opacity', 1)
+				.attr('x', (a) => xScale(a.category))
+				.attr('width', xScale.bandwidth())
 
-		chart.selectAll('#limit').remove()
-		chart.selectAll('.divergence').remove()
+			chart.selectAll('#limit').remove()
+			//chart.selectAll('.divergence').remove()
 		})
 
-	categroryBar
+	categoryBar
 		.append('text')
-		.attr('class', 'value')
 		.attr('x', (a) => xScale(a.category) + xScale.bandwidth() / 2)
 		.attr('y', (a) => yScale(a.value) + 40)
 		.attr('text-anchor', 'middle')
